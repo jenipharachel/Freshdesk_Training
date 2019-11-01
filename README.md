@@ -1,1 +1,0 @@
-# Freshdesk_Training
