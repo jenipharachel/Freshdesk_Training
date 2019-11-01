@@ -1,0 +1,13 @@
+{
+  "Contact": {
+    "display_name": "Contact details",
+    "description": "Please enter the contact details",
+    "type": "text",
+    "required": true
+  },
+  "Age": {
+    "display_name": "Age",
+    "description": "Please enter your age in years",
+    "type": "number"
+  }
+}
