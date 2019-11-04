@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+  <head>
+    <title>BOOKS</title>
+  </head>
+
+  <style></style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://static.freshdev.io/fdk/2.0/assets/fresh_client.js"></script>
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://static.freshdev.io/fdk/2.0/assets/freshdesk.css"
+  />
+
+  <body>
+    <form>
+      <label for="name">Name:</label>
+      <input name="name" id="name" type="text" required></input>
+      <span class="error_form" id="name_error_message"></span>
+
+      <label for="age">Age:</label>
+      <input name="age" id="age" type="number" required></input>
+      <span class="error_form" id="age_error_message"></span>
+
+      <label for="email">Email:</label>
+      <input name="email" id="email" type="email" required></input>
+      <span class="error_form" id="email_error_message"></span>
+
+      <label for="mobile">Mobile:</label>
+      <input name="mobile" id="mobile" type="number" required></input>
+      <span class="error_form" id="mobile_error_message"></span>
+
+      <label for="gender">Gender:</label>
+      <input type="radio" id="gender" name="gender" value="male"> Male
+      <input type="radio" id="gender" name="gender" value="female"> Female
+      <input type="radio" id="gender" name="gender" value="other"> Other
+      <label for="year">Graduation Year:</label>
+      <select id="year" name="year">
+        <option value="2010">2010</option>
+        <option value="2011">2011</option>
+        <option value="2012">2012</option>
+        <option value="2013">2013</option>
+        <option value="2014">2014</option>
+        <option value="2015">2015</option>
+        <option value="2016">2016</option>
+        <option value="2017">2017</option>
+        <option value="2018">2018</option>
+        <option value="2019">2019</option>
+      </select>
+      <!-- <input name="year" id="year" type="month" min="2010" max="2019" required></input> -->
+    </form>
+  </body>
+
+  <script>
+    function getConfigs(data) {
+        console.log(data);
+        if (data) {
+            $('#name').val(data.name);
+            $('#age').val(data.age);
+            $('#email').val(data.email);
+            $('#mobile').val(data.mobile);
+            $("[name=gender]").val([data.gender]);
+            $('#year').val(data.year);
+        }
+    }
+
+    function postConfigs() {
+        var name = $("#name").val();
+        var age = $('#age').val();
+        var email = $("#email").val();
+        var mobile = $('#mobile').val();
+        var gender = $("input[type='radio']:checked").val();
+        var year = $('#year').val();
+        console.log(name, age, email, mobile, gender, year);
+        return {
+            name: name,
+            age: age,
+            email: email,
+            mobile: mobile,
+            gender: gender,
+            year: year
+        }
+    }
+
+    function check_name() {
+      var pattern = /^([A-Za-z]{3,})\s([A-Za-z]{3,})$/;
+      var name = $("#name").val();
+      if (pattern.test(name) && name !== '') {
+        $("#name_error_message").hide();
+        $("#name").css("border-bottom","2px solid #34F458");
+      } else {
+        $("#name_error_message").html("Should contain two words and no numbers");
+        $("#name_error_message").show();
+        $("#name").css("border-bottom","2px solid #F90A0A");
+        error_name = true;
+      }
+    }
+
+    function check_age() {
+    var age = $("#age").val();
+    console.log(age);
+      if (age < 18) {
+      $("#age_error_message").html("Age should be above 18");
+      $("#age_error_message").show();
+      $("#age").css("border-bottom","2px solid #F90A0A");
+      error_age = true;
+      } else {
+      $("#age_error_message").hide();
+      $("#age").css("border-bottom","2px solid #34F458");
+      }
+    }
+
+    function check_email() {
+      var pattern = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+      var email = $("#email").val();
+      if (pattern.test(email) && email !== '') {
+        $("#email_error_message").hide();
+        $("#email").css("border-bottom","2px solid #34F458");
+      } else {
+        $("#email_error_message").html("Invalid Email");
+        $("#email_error_message").show();
+        $("#email").css("border-bottom","2px solid #F90A0A");
+        error_email = true;
+      }
+    }
+
+    function check_mobile() {
+      var pattern = /^[0-9]{10}$/g;
+      var mobile = $("#mobile").val();
+      if (!pattern.test(mobile) || mobile == "") {
+        $("#mobile_error_message").html("Should contain 10 digits");
+        $("#mobile_error_message").show();
+        $("#mobile").css("border-bottom","2px solid #F90A0A");
+        error_mobile = true;
+      } else {
+        $("#mobile_error_message").hide();
+        $("#mobile").css("border-bottom","2px solid #34F458");
+      }
+    }
+
+    function validate() {
+      error_name = false;
+      error_age = false;
+      error_email = false;
+      error_mobile = false;
+      check_name();
+      check_age();
+      check_email();
+      check_mobile();
+      
+      if ($('#name').val() == '' || $('#age').val() == '' || $('#email').val() == '' || $('#mobile').val() == '' || $("input[type='radio']:checked").val() == '' || $("input[type='radio']:checked").val() == undefined || $('#year').val() == '') {
+        return false;
+      } else {
+        if (error_name === false && error_age === false && error_email === false && error_mobile === false) {
+          return true;
+        } else {
+          return false;
+        }
+      } 
+    }
+  </script>
+</html>
